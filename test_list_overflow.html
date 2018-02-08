@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>列表数据超出div可见区域</title>
+		<!--<link href="videojs/video-js.css" rel="stylesheet" type="text/css"/>-->
+		<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	    <style>
+	    	*{
+	    		padding: 0;
+	    		margin: 0;
+	    		/*box-sizing: border-box;*/
+	    	}
+	    	html,body{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    		background-color: black;
+	    	}
+	    	ul li{
+	    		list-style: none;
+	    		box-sizing: border-box;
+	    		border:2px solid transparent;
+	    	}
+	    	.main{
+	    		width: 1440px; 
+	    		height: 420px;
+	    		color: white;
+	    		position: relative;
+	    	}
+	    	.main div:first-child{
+	    		width: 100%;
+	    		height: 80px;
+	    		font-size: 24px;
+	    		text-align: center;
+	    	}
+	    	.main #news{
+	    		width: 310px;
+	    		height: 100%;
+	    		overflow: hidden;
+	    	}
+	    	.main .right{
+	    		top:120px;
+	    		left:360px;
+	    		width: 1100px;
+	    		height: 410px;
+	    		position: absolute;
+	    	}
+	    	#news ul{
+	    		width: 310px;
+	    		height: 400px;
+	    		overflow: hidden;
+	    	}
+	    	#news ul li{
+	    		width: 300px;
+	    		height: 50px;
+	    		line-height: 50px;
+	    		text-align: center;
+	    		background-color: dodgerblue;
+	    		margin:0 10px 10px 10px;
+	    	}
+	    	#news ul li:first-child{
+	    		margin-top: 20px;
+	    	}
+	    	.right >div{
+	    		float: left;
+	    	}
+	    	.right .left_arr,.right .right_arr{
+	    		width: 40px;
+	    		height: 410px;
+	    		line-height: 410px;
+	    		visibility: hidden;
+	    	}
+	    	.imgs{
+	    		width: 1000px;
+	    		height: 100%;
+	    		overflow: hidden;
+	    	}
+	    	.imgs ul{
+	    		width: 2000px;
+	    		height: 210px;
+	    		overflow: hidden;
+	    	}
+	    	.imgs ul li{
+	    		margin: 0 10px 10px 0;
+	    		width: 180px;
+	    		height: 200px;
+	    		float: left;
+	    		/*display: inline-block;*/
+	    		position: relative;
+	    		border-color: transparent;
+	    		border: 1px solid gray;
+	    	}
+	    	.imgs ul li img{
+	    		left: 0;
+	    		top:0;
+	    		width: 100%;
+	    		height: 100%;
+	    		position: absolute;
+	    	}
+	    	.imgs ul li p{
+	    		bottom: 0;
+	    		width: 100%;
+	    		height: 40px;
+	    		position: absolute;
+	    		text-align: center;
+	    		display: none;
+	    	}
+	    	#news li.focus{
+	    		box-shadow: 0 4px 40px red;
+	    	}
+	    	
+	    	.imgs li.imgFocus{
+	    		z-index: 10;
+	    		border: 2px solid #1ce694;
+	    	}
+	    	/*.imgs li.imgFocus p{
+	    		background-size: 100% 100%;
+	    		background-color: rgba(28,230,148,0.3);
+	    		display: block;
+	    	}*/
+	    	
+	    </style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 80px;line-height:80px;font-size: 26px;color: white;text-align: center;">规则型列表，列表宽度或者高度超出可见区域, 且数据一次性加载,不存在分页情况</div>
+		<div id="main" class="main">
+			<div id="news">
+		        <ul id="news_item">
+		        	<li id="news_item_0">测试1</li>
+		        	<li id="news_item_1">测试2</li>
+		        	<li id="news_item_2">测试3</li>
+		        	<li id="news_item_3">测试4</li>
+		        	<li id="news_item_4">测试5</li>
+		        	<li id="news_item_5">测试6</li>
+		        	<li id="news_item_6">测试7</li>
+		        	<li id="news_item_7">测试8</li>
+		        	<li id="news_item_8">测试9</li>
+		        	<li id="news_item_9">测试10</li>
+		        	<li id="news_item_10">测试11</li>
+		        </ul>
+	    	</div>
+	    	<div class="right">
+	    		<div class="left_arr" id="left_arr"><img src="img/haibao_left.png"></div>
+	    		<div class="imgs">
+		    		<ul id="imgs_item">
+		    			<li id="imgs_item_0">1<img src="image/jiaoyu_1.jpg" alt="" /><p></p></li>
+			        	<li id="imgs_item_1">2<img src="image/jiaoyu_2.jpg" alt="" /><p></p></li>
+			        	<li id="imgs_item_2">3<img src="image/jiaoyu_3.jpg" alt="" /><p></p></li>
+			        	<li id="imgs_item_3">4<img src="image/jiaoyu_4.jpg" alt="" /><p></p></li>
+			        	<li id="imgs_item_4">5<img src="image/jiaoyu_5.jpg" alt="" /><p></p></li>
+			        	<li id="imgs_item_5">6<img src="image/jiaoyu_6.jpg" alt="" /><p></p></li>
+			        	<li id="imgs_item_6">7<img src="image/jiaoyu_7.jpg" alt="" /><p></p></li>
+			        	<li id="imgs_item_7">8<img src="image/jiaoyu_8.jpg" alt="" /><p></p></li>
+		    			<li id="imgs_item_8">9<img src="image/jiaoyu_9.jpg" alt="" /><p></p></li>
+			        	<li id="imgs_item_9">10<img src="image/jiaoyu_10.jpg" alt="" /><p></p></li></ul>
+		    			<div style="clear: both;"></div>
+	    		</div>
+		    	<div class="right_arr" id="right_arr"><img src="img/haibao_right.png"></div>
+	    	</div>
+	    	
+		</div>
+		<script type="text/javascript" src="public/key_extend_test.js">	</script>
+	    <script type="text/javascript">
+			var nav1 = new BaseAreaData("news_item","news_item_0","focus",[0,1],[]);
+			var nav2 = new BaseAreaData("imgs_item","imgs_item_0","imgFocus",[1,0],[]);
+	    	nav1.initData();
+	    	nav2.initData();  
+	  		nav1.setAreaMap([{Right:nav2}]);
+	    	nav2.setAreaMap([{Left:nav1}]);
+	    	nav1.startRun();
+	    </script>
+	</body>
+</html>

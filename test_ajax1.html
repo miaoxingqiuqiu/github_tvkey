@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>垂直列表请求</title>
+		<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	    <style>
+	    	*{
+	    		padding: 0;
+	    		margin: 0;
+	    		/*box-sizing: border-box;*/
+	    	}
+	    	html,body{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    		background-color: black;
+	    	}
+	    	ul li{
+	    		list-style: none;
+	    		box-sizing: border-box;
+	    		border:2px solid transparent;
+	    	}
+	    	.main{
+	    		width: 1440px; 
+	    		height: 440px;
+	    		color: white;
+	    	}
+	    	.main >div#news{
+	    		width: 310px;
+	    		height: 100%;
+	    		margin:60px auto;
+	    	}
+	    	#news ul{
+	    		width: 330px;
+	    		height: 100%;
+	    		overflow: hidden;
+	    	}
+	    	#news ul li{
+	    		width: 300px;
+	    		height: 50px;
+	    		line-height: 50px;
+	    		text-align: center;
+	    		background-color: dodgerblue;
+	    		margin:0 10px 10px 10px;
+	    	}
+	    	#news ul li:first-child{
+	    		margin-top: 20px;
+	    	}
+	    	#news li.focus{
+	    		box-shadow: 0 0 40px yellow;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 80px;line-height:80px;font-size: 26px;color: white;text-align: center;">规则型列表(多行一列)，列表宽度和高度固定,dom位置固定，数据分页加载(后台有分页接口)</div>
+		<div id="main" class="main">
+			<div id="news">
+		        <ul id="news_item">
+		        	<li id="news_item_0"></li>
+		        	<li id="news_item_1"></li>
+		        	<li id="news_item_2"></li>
+		        	<li id="news_item_3"></li>
+		        	<li id="news_item_4"></li>
+		        	<li id="news_item_5"></li>
+		        	<li id="news_item_6"></li>
+		        </ul>
+	    	</div>	
+		</div>
+		<script type="text/javascript" src="public/key_extend_test.js">	</script>
+	    <script type="text/javascript">
+	    	var nav1 = new SidePageData("news_item","news_item_0","focus",[0,1],[],"http://10.10.3.5/mmserver/search/getSearchResult.do?searchType=vods&siteId=qhsj&lmId=xiju2&equipType=base&showType=1&showFields=id,mzName,haibao,vodType,advertImg",{"up":"Page","down":"Page","left":"Area","right":"Area"});
+			nav1.initData();
+			nav1.startRun();
+			
+			nav1.loadPageAssets = function ( objs ) {
+				var data = objs.data;
+				console.log("####### data #####",data);
+				this.setCurPageAssets(data);  
+				this.setTotalPageNum(objs.totalPage);
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < data.length ; i++ ) {
+					labels[i].innerHTML = data[i].mzName;
+				}
+			};
+			nav1.delPageAssets = function () {
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < labels.length ; i++ ) {
+					labels[i].innerHTML = "";
+				}
+			};
+	    </script>
+	</body>
+</html>

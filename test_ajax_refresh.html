@@ -1,0 +1,228 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>AJAX请求</title>
+		<!--<link href="videojs/video-js.css" rel="stylesheet" type="text/css"/>-->
+		<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	    <style>
+	    	*{
+	    		padding: 0;
+	    		margin: 0;
+	    		/*box-sizing: border-box;*/
+	    	}
+	    	html,body{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    		background-color: black;
+	    	}
+	    	ul li{
+	    		list-style: none;
+	    		box-sizing: border-box;
+	    		border:2px solid transparent;
+	    	}
+	    	.main{
+	    		width: 1440px; 
+	    		height: 420px;
+	    		color: white;
+	    	}
+	    	.main >div{
+	    		margin-top: 20px;
+	    		display: inline-block;
+	    	}
+	    	.main >div#news{
+	    		width: 310px;
+	    		height: 100%;
+	    	}
+	    	.main >div.right{
+	    		width: 1100px;
+	    		height: 410px;
+	    	}
+	    	#news ul{
+	    		width: 310px;
+	    		height: 100%;
+	    		overflow: hidden;
+	    	}
+	    	#news ul li{
+	    		width: 300px;
+	    		height: 50px;
+	    		line-height: 50px;
+	    		text-align: center;
+	    		background-color: dodgerblue;
+	    		margin:0 10px 10px 10px;
+	    	}
+	    	#news ul li:first-child{
+	    		margin-top: 10px;
+	    	}
+	    	.right >div{
+	    		float: left;
+	    	}
+	    	.right .left_arr,.right .right_arr{
+	    		width: 40px;
+	    		height: 410px;
+	    		line-height: 410px;
+	    		visibility: hidden;
+	    	}
+	    	.imgs{
+	    		width: 1000px;
+	    		height: 100%;
+	    		overflow: hidden;
+	    	}
+	    	.imgs ul{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    	}
+	    	.imgs ul li{
+	    		margin: 0 10px 10px 0;
+	    		width: 180px;
+	    		height: 200px;
+	    		float: left;
+	    		position: relative;
+	    		border-color: transparent;
+	    	}
+	    	.imgs ul li img{
+	    		left: 0;
+	    		top:0;
+	    		width: 100%;
+	    		height: 100%;
+	    		position: absolute;
+	    	}
+	    	.imgs ul li p{
+	    		bottom: 0;
+	    		width: 100%;
+	    		height: 40px;
+	    		position: absolute;
+	    		text-align: center;
+	    		display: none;
+	    	}
+	    	#news li.focus{
+	    		box-shadow: 0 4px 40px red;
+	    	}
+	    	
+	    	.imgs li.imgFocus{
+	    		z-index: 10;
+	    		border: 2px solid #1ce694;
+	    	}
+	    	.imgs li.imgFocus p{
+	    		background-size: 100% 100%;
+	    		/*background: url(img/test.png) center center;*/
+	    		background-color: rgba(28,230,148,0.3);
+	    		display: block;
+	    	}
+	    	
+	    </style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 80px;line-height:80px;font-size: 26px;color: white;text-align: center;">规则型列表，列表宽度或者高度固定, 左侧焦点切换，右侧数据刷新</div>
+		<div id="main" class="main">
+			<div id="news">
+		        <ul id="news_item">
+		        	<li id="news_item_0"></li>
+		        	<li id="news_item_1"></li>
+		        	<li id="news_item_2"></li>
+		        	<li id="news_item_3"></li>
+		        	<li id="news_item_4"></li>
+		        	<li id="news_item_5"></li>
+		        	<li id="news_item_6"></li>
+		        </ul>
+	    	</div>
+	    	<div class="right">
+	    		<div class="left_arr" id="left_arr"><img src="image/haibao_left.png"></div>
+	    		<div class="imgs">
+		    		<ul id="imgs_item">
+		    			<li id="imgs_item_0"><img src="" alt="" /><p></p></li>
+			        	<li id="imgs_item_1"><img src="" alt="" /><p></p></li>
+			        	<li id="imgs_item_2"><img src="" alt="" /><p></p></li>
+			        	<li id="imgs_item_3"><img src="" alt="" /><p></p></li>
+			        	<li id="imgs_item_4"><img src="" alt="" /><p></p></li>
+			        	<li id="imgs_item_5"><img src="" alt="" /><p></p></li>
+			        	<li id="imgs_item_6"><img src="" alt="" /><p></p></li>
+			        	<li id="imgs_item_7"><img src="" alt="" /><p></p></li>
+		    			<li id="imgs_item_8"><img src="" alt="" /><p></p></li>
+			        	<li id="imgs_item_9"><img src="" alt="" /><p></p></li></ul>
+		    	</div>
+		    	<div class="right_arr" id="right_arr"><img src="image/haibao_right.png"></div>
+	    	</div>
+	    	
+		</div>
+		<script type="text/javascript" src="public/key_extend_test.js">	</script>
+	    <script type="text/javascript">
+	    	var nav2 = null;
+	    	var nav1 = new SidePageData("news_item","news_item_0","focus",[0,1],[{Right:nav2}],"http://10.10.3.5:15414/mmserver/common/getSubLm.do?siteId=qhsj&lmId=hddb",{"up":"Page","down":"Page","left":"Area","right":"Area"});
+			nav2 = new SidePageData("imgs_item","imgs_item_0","imgFocus",[1,5],[{Left:nav1}],"http://10.10.3.5/mmserver/search/getSearchResult.do?searchType=vods&siteId=qhsj&lmId=xiju2&equipType=base&showType=1&showFields=id,mzName,haibao,vodType,advertImg",{"up":"Page","down":"Page","left":"Page","right":"Page"});
+			nav1.initData();
+			nav2.initData();//nav2初始化后
+			nav1.setAreaMap2([{Right:nav2}]);
+			nav1.startRun();
+			
+			nav1.loadPageAssets = function ( objs ) {
+				var data = objs;
+				console.log("####### data #####",data);
+				this.setCurPageAssets(data);  
+			//	this.setTotalPageNum(objs.totalPage);
+				this.setTotalPageNum(2);
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < data.length ; i++ ) {
+					/*labels[i].innerHTML = data[i].lmName;*/
+					$(labels[i]).text(data[i].lmName);
+					$(labels[i]).attr("lmId",data[i].lmId);
+				}
+			};
+			nav1.delPageAssets = function () {
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < labels.length ; i++ ) {
+			//		labels[i].innerHTML = "";
+					$(labels[i]).text("");
+					$(labels[i]).attr("lmId","");
+				}
+			};
+			nav1.vetChange = function () {
+				var lmId = $(this.getCurLabelObj()).attr("lmId");
+				console.log(" 123344 lmId = " + lmId);
+				var url = "http://10.10.3.5/mmserver/search/getSearchResult.do?searchType=vods&siteId=qhsj&lmId="+ lmId +"&equipType=base&showType=1&showFields=id,mzName,haibao,vodType,advertImg";
+				nav2.setCurPageNum(1);
+				nav2.setUrlPage(url);
+				nav2.initData();
+			};
+			
+	    	nav2.loadPageAssets = function ( objs ) {
+				var data = objs.data;
+				console.log(" ### imgs  data ###",objs);
+				this.setCurPageAssets(data);
+				this.setTotalPageNum(objs.totalPage);
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < data.length ; i++ ) {
+					if ( data[i].showUrl == undefined || data[i].showUrl == "" ) {
+						labels[i].getElementsByTagName("img")[0].src = "image/index_haibao.jpg";
+					} else {
+						labels[i].getElementsByTagName("img")[0].src = data[i].showUrl;
+					}	
+				//	labels[i].getElementsByTagName("img")[0].src = data[i].showUrl;
+					labels[i].getElementsByTagName("p")[0].innerHTML = data[i].mzName;
+				}
+			};
+			nav2.delPageAssets = function () {
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < labels.length ; i++ ) {
+					labels[i].getElementsByTagName("img")[0].src = "";
+					labels[i].getElementsByTagName("p")[0].innerHTML = "";
+				}	
+			}
+			nav2.showUpOrLeftTag = function () {
+				document.getElementById("left_arr").style.visibility ="visible";
+			}
+			nav2.hideUpOrLeftTag = function () {
+				document.getElementById("left_arr").style.visibility ="hidden";
+			}
+			nav2.showDownOrRightTag = function () {
+				document.getElementById("right_arr").style.visibility ="visible";
+			}
+			nav2.hideDownOrRightTag = function () {
+				document.getElementById("right_arr").style.visibility ="hidden";
+			}
+
+	    </script>
+	</body>
+</html>

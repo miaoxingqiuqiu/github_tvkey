@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>多行多列</title>
+		<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	    <style>
+	    	*{
+	    		padding: 0;
+	    		margin: 0;
+	    	}
+	    	html,body{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    		background-color: black;
+	    	}
+	    	ul li{
+	    		list-style: none;
+	    	}
+	    	.main{
+	    		width: 1440px; 
+	    		height: 300px;
+	    		color: white;
+	    	}
+	    	#right{
+	    		width: 820px;
+	    		height: 320px;
+	    		margin: 60px auto;
+	    	}
+	    	#right ul{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    	}
+	    	#right ul li{
+	    		width: 260px;
+	    		height: 140px;
+	    		line-height: 140px;
+	    		text-align: center;
+	    		background-color:darkgoldenrod;
+	    		margin:0 10px 10px 0;
+	    		float: left;
+	    	}
+	    	li.focus{
+	    		box-shadow: 0 4px 40px red;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 80px;line-height:80px;font-size: 26px;color: white;text-align: center;">规则型列表, 且列表宽度或者高度在可视区域内</div>
+		<div id="main" class="main">
+	    	<div id="right">
+	    		<ul id="right_item">
+		        	<li id="right_item_0">item1</li>
+		        	<li id="right_item_1">item2</li>
+		        	<li id="right_item_2">item3</li>
+		        	<li id="right_item_3">item4</li>
+		        	<li id="right_item_4">item5</li>
+		        	<li id="right_item_5">item6</li>
+		        </ul>
+	    	</div>
+		</div>
+		<script type="text/javascript" src="public/key_extend_test.js">	</script>
+	    <script type="text/javascript">
+	    	var nav3 = new BaseAreaData("right_item","right_item_0","focus",[1,3],[]);
+			nav3.initData();
+			nav3.startRun();
+	    </script>
+	</body>
+</html>

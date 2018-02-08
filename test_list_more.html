@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>不规则排列，固定坑位</title>
+		<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	    <style>
+	    	*{
+	    		padding: 0;
+	    		margin: 0;
+	    	}
+	    	html,body{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    		background-color: black;
+	    	}
+	    	ul li{
+	    		list-style: none;
+	    	}
+	    	.main{
+	    		width: 1440px; 
+	    		height: 300px;
+	    		color: white;
+	    	}
+	    	.main .content{
+	    		width: 1000px;
+	    		margin: 40px auto;
+	    	}
+	    	.main .content ul{
+	    		width: 1020px;
+	    		height: 410px;
+	    	}
+	    	.main .content ul li{
+	    		margin: 0 10px 10px 0;
+	    		text-align: center;
+	    		line-height: 200px;
+	    		float: left;
+	    		background-color: cadetblue;
+	    	}
+	    	#ul_item_0{
+	    		width: 210px;
+	    		height: 410px;
+	    		line-height: 410px;
+	    	}
+	    	#ul_item_1{
+	    		width: 200px;
+	    		height: 200px;
+	    	}
+	    	#ul_item_2{
+	    		width: 200px;
+	    		height: 200px;
+	    	}
+	    	#ul_item_3{
+	    		width: 300px;
+	    		height: 200px;
+	    	}
+	    	#ul_item_4{
+	    		width: 360px;
+	    		height: 200px;
+	    	}
+	    	#ul_item_5{
+	    		width: 350px;
+	    		height: 200px;
+	    	}
+	
+	    	li.focus{
+	    		box-shadow: 0 0 40px red;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 80px;line-height:80px;font-size: 26px;color: white;text-align: center;">不规则排列，固定坑位, 且高度和宽度在可见区域</div>
+		<div id="main" class="main">
+			<div class="content" id="content">
+				<ul id="ul_item">
+		        	<li id="ul_item_0">item1</li>
+		        	<li id="ul_item_1">item2</li>
+		        	<li id="ul_item_2">item3</li>
+		        	<li id="ul_item_3">item4</li>
+		        	<li id="ul_item_4">item5</li>
+		        	<li id="ul_item_5">item6</li>
+		        </ul>
+			</div>
+		</div>
+		<script type="text/javascript" src="public/key_extend_test.js">	</script>
+	    <script type="text/javascript">
+	    	var nav1 = null;
+	    	var menuMap = [
+	    	{"index":0 ,"right":1},
+	    	{"index":1 ,"left":0, "right":2 , "down":4},
+	    	{"index":2 ,"left":1, "right":3 , "down":4},
+	    	{"index":3 ,"left":2, "down":5 },
+	    	{"index":4 ,"left":0, "right":5,"up":1},
+	    	{"index":5 ,"left":4, "up":3}
+	    	];
+	    	nav1 = new BaseAreaData2("ul_item","ul_item_0","focus",[0,0],[],menuMap);
+			nav1.initData();
+			console.log("nav1",nav1);
+			nav1.startRun();
+	    </script>
+	</body>
+</html>

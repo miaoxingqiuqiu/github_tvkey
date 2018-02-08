@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>
+		<!--<link href="videojs/video-js.css" rel="stylesheet" type="text/css"/>-->
+		<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	    <style>
+	    	*{
+	    		padding: 0;
+	    		margin: 0;
+	    	}
+	    	html,body{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    		background-color: black;
+	    		color: white;
+	    	}
+	    	ul li{
+	    		list-style: none;
+	    	}
+	    	.main{
+	    		width: 1280px; 
+	    		height: 300px;
+	    		display: flex;
+	    		flex-direction:row;
+	    		margin: 60px auto;
+	    		margin-bottom: 10px;
+	    	}
+	    	.main >div{
+	    		flex: 1;
+	    	}
+	    	
+	    	.main >div#left{
+	    		flex: 0 0 300px;
+	    	}
+	    	#left,#right{
+	    		display: inline-block;	
+	    	}
+	    	#left ul li{
+	    		width: 300px;
+	    		height: 50px;
+	    		line-height: 50px;
+	    		text-align: center;
+	    		background-color: dodgerblue;
+	    		margin:0 10px 10px 10px;
+	    	}
+	    	#right ul li{
+	    		width: 300px;
+	    		height: 140px;
+	    		line-height: 140px;
+	    		text-align: center;
+	    		background-color:darkgoldenrod;
+	    		margin:0 10px 10px 0;
+	    		float: left;
+	    	}
+	    	#bottom{
+	    		width: 1260px;
+	    		height: 50px;
+	    		margin: auto;
+	    	}
+	    	#bottom ul{
+	    		width: 1300px;
+	    	}
+	    	#bottom ul li{
+	    		width: 300px;
+	    		height: 50px;
+	    		line-height: 50px;
+	    		text-align: center;
+	    		background-color:forestgreen;
+	    		margin:0 10px 10px 0;
+	    		float: left;
+	    	}
+	    	
+	    	li.focus{
+	    		box-shadow: 0 0 40px red;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 80px;line-height:80px;font-size: 26px;color: white;text-align: center;">规则型列表(3中类型组合), 且列表宽度或者高度在可视区域内</div>
+		<div id="main" class="main">
+			<div id="left">
+		        <ul id="left_item">
+		        	<li id="left_item_0">item1_1</li>
+		        	<li id="left_item_1">item1_2</li>
+		        	<li id="left_item_2">item1_3</li>
+		        	<li id="left_item_3">item1_4</li>
+		        	<li id="left_item_4">item1_5</li>
+		        </ul>
+	    	</div>
+	    	<div id="right">
+	    		<ul id="right_item">
+		        	<li id="right_item_0">item2_1</li>
+		        	<li id="right_item_1">item2_2</li>
+		        	<li id="right_item_2">item2_3</li>
+		        	<li id="right_item_3">item2_4</li>
+		        	<li id="right_item_4">item2_5</li>
+		        	<li id="right_item_5">item2_6</li>
+		        </ul>
+	    	</div>
+		</div>
+		<div class="bottom" id="bottom">
+			<ul id="bottom_item">
+	        	<li id="bottom_item_0">item3_1</li>
+	        	<li id="bottom_item_1">item3_2</li>
+	        	<li id="bottom_item_2">item3_3</li>
+	        	<li id="bottom_item_3">item3_4</li>
+	        </ul>
+		</div>
+		<script type="text/javascript" src="public/key_extend_test.js">	</script>
+	    <script type="text/javascript">
+	    	var nav1 = null;
+	    	var nav2 = null;
+	    	var nav3 = null;
+	    	nav1 = new BaseAreaData("left_item","left_item_0","focus",[0,1],[{Right:nav2,Bottom:nav3}]);
+	    	nav2 = new BaseAreaData("right_item","right_item_0","focus",[1,3],[{Left:nav1,Bottom:nav3}]);
+	    	nav3 = new BaseAreaData("bottom_item","bottom_item_0","focus",[1,0],[{Top:nav1}]);
+			nav1.initData();
+			nav2.initData();
+			nav3.initData();
+			nav1.setAreaMap2([{Right:nav2,Bottom:nav3}]);
+			nav2.setAreaMap2([{Left:nav1,Bottom:nav3}]);
+			nav1.startRun();
+	    </script>
+	</body>
+</html>

@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>多行一列</title>
+		<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	    <style>
+	    	*{
+	    		padding: 0;
+	    		margin: 0;
+	    	}
+	    	html,body{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    		background-color: black;
+	    	}
+	    	ul li{
+	    		list-style: none;
+	    	}
+	    	.main{
+	    		width: 1440px; 
+	    		height: 300px;
+	    		display: flex;
+	    		flex-direction:row;
+	    	}
+	    	#left{
+	    		width: 300px;
+	    		height: 300px;
+	    		margin: 60px auto;
+	    	}
+	    	#left ul li{
+	    		width: 300px;
+	    		height: 50px;
+	    		line-height: 50px;
+	    		background-color: dodgerblue;
+	    		margin:0 10px 10px 10px;
+	    		text-align: center;
+	    	}
+	    	li.focus{
+	    		box-shadow: 0 4px 40px red;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 80px;line-height:80px;font-size: 26px;color: white;text-align: center;">规则型列表(多行一列), 且列表高度在可视区域内</div>
+		<div id="main" class="main">
+			<div id="left">
+		        <ul id="left_item">
+		        	<li id="left_item_0">item1</li>
+		        	<li id="left_item_1">item2</li>
+		        	<li id="left_item_2">item3</li>
+		        	<li id="left_item_3">item4</li>
+		        	<li id="left_item_4">item5</li>
+		        </ul>
+	    	</div>
+		</div>
+		<script type="text/javascript" src="public/key_extend_test.js">	</script>
+	    <script type="text/javascript">
+	    	var nav1 = null;
+	    	nav1 = new BaseAreaData("left_item","left_item_0","focus",[0,1],[]);
+			nav1.initData();
+			nav1.startRun();
+	    </script>
+	</body>
+</html>

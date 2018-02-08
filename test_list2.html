@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>一行多列</title>
+		<script type="text/javascript" src="jquery/jquery.min.js"></script>
+	    <style>
+	    	*{
+	    		padding: 0;
+	    		margin: 0;
+	    	}
+	    	html,body{
+	    		width: 100%;
+	    		height: 100%;
+	    		overflow: hidden;
+	    		background-color: black;
+	    	}
+	    	ul li{
+	    		list-style: none;
+	    	}
+	    	.main{
+	    		width: 1440px; 
+	    		height: 300px;
+	    		display: flex;
+	    		flex-direction:row;
+	    	}
+	    	#bottom{
+	    		width: 1000px;
+	    		height: 50px;
+	    		margin: 60px auto;
+	    		color: white;
+	    	}
+	    	#bottom ul li{
+	    		width: 240px;
+	    		height: 50px;
+	    		line-height: 50px;
+	    		background-color:forestgreen;
+	    		margin:0 10px 10px 0;
+	    		float: left;
+	    		text-align: center;
+	    	}
+	    	
+	    	li.focus{
+	    		box-shadow: 0 4px 40px red;
+	    	}
+	    </style>
+	</head>
+	<body>
+		<div style="width: 100%;height: 80px;line-height:80px;font-size: 26px;color: white;text-align: center;">规则型列表(一行多列), 且列表宽度和高度在可视区域内</div>
+		<div class="bottom" id="bottom">
+			<ul id="bottom_item">
+	        	<li id="bottom_item_0">item1</li>
+	        	<li id="bottom_item_1">item2</li>
+	        	<li id="bottom_item_2">item3</li>
+	        	<li id="bottom_item_3">item4</li>
+	        </ul>
+		</div>
+		<script type="text/javascript" src="public/key_extend_test.js">	</script>
+	    <script type="text/javascript">
+	    	var nav3 = new BaseAreaData("bottom_item","bottom_item_0","focus",[1,0],[]);
+			nav3.initData();
+			nav3.startRun();
+	    </script>
+	</body>
+</html>
