@@ -95,8 +95,15 @@
 	    	{"index":5 ,"left":4, "up":3}
 	    	];
 	    	nav1 = new BaseAreaData2("ul_item","ul_item_0","focus",[0,0],[],menuMap);
+			nav1.setAjaxUrl("http://10.10.3.5/mmserver/common/getSubLm.do?siteId=qhsj&lmId=hddb&pageYema=1&pageSize=7");
+			nav1.loadAjaxData = function ( res ) {
+				var data = JSON.parse(res);
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < data.length ; i++ ) {
+					labels[i].innerHTML = data[i].lmName;
+				}
+			};
 			nav1.initData();
-			console.log("nav1",nav1);
 			nav1.startRun();
 	    </script>
 	</body>

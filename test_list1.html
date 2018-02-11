@@ -14,6 +14,7 @@
 	    		height: 100%;
 	    		overflow: hidden;
 	    		background-color: black;
+	    		color: white;
 	    	}
 	    	ul li{
 	    		list-style: none;
@@ -21,8 +22,6 @@
 	    	.main{
 	    		width: 1440px; 
 	    		height: 300px;
-	    		display: flex;
-	    		flex-direction:row;
 	    	}
 	    	#left{
 	    		width: 300px;
@@ -59,6 +58,22 @@
 	    <script type="text/javascript">
 	    	var nav1 = null;
 	    	nav1 = new BaseAreaData("left_item","left_item_0","focus",[0,1],[]);
+			/*nav1.setAjaxUrl("http://10.10.3.5/mmserver/search/getSearchResult.do?searchType=vods&siteId=qhsj&lmId=wuxia&pageYema=1&pageSize=5&equipType=base&showType=1&showFields=id,mzName,haibao,vodType,advertImg");
+			nav1.loadAjaxData = function ( res ) {
+				var data = JSON.parse(res);
+				data = data.data;
+				this.maxIndex = data.length - 1;
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < data.length ; i++ ) {
+					labels[i].innerHTML = data[i].mzName;
+				}
+			};*/
+			/*nav1.loadAssetData = function () {
+				var labels = this.getLabelObjs();
+				for ( var i = 0 ; i < 5 ; i++ ) {
+					labels[i].innerHTML = "test_"+(i+1);
+				}
+			};*/
 			nav1.initData();
 			nav1.startRun();
 	    </script>

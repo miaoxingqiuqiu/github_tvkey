@@ -1,3 +1,4 @@
+"use strict";
 function keyBinds(_Obj){
 	document.onkeydown = function(evt){
 		var key_code = event.which ? event.which: event.keyCode;
@@ -68,11 +69,16 @@ var GetLabelData = function ( _parentObjId , _focusId ) {
 		}
 	};
 	//设置添加dom存储数组
-	this.setLabelObjs = function () {
-		//可以传进来，使用js操作获取原生dom节点
+	this.setLabelObjs = function ( childClass ) {
 		try{
+			if ( arguments.length == 0 ) {
+				//获取父节点下的一级子节点
+				var list = document.getElementById(parentId).children;
+			} else if ( arguments.length == 1 ) {
+				//获取具有某类属性的dom集合
+				var list = document.getElementById(parentId).getElementsByClassName(arguments[0]);
+			}
 			labelObjs = [];
-			var list = document.getElementById(parentId).children;
 			for ( var i = 0 ; i < list.length ; i++ ) {
 				if ( list[i].nodeType == 1 && list[i].id.indexOf(parentId) > -1) {
 					labelObjs.push(list[i]);
@@ -98,8 +104,16 @@ var BaseAreaData = function ( _parentId , _focusId, _focusClass , _stepMap , _ar
 	GetLabelData.call(this,_parentId,_focusId);//继承父类
 	this.parentId = _parentId;
 	this.focusClass = _focusClass;
+	this.maxIndex = 0;
+	this.ajaxUrl = "";
 	var stepMap = [1,0];
 	var areaMapLeft,areaMapRight,areaMapTop,areaMapBottom;
+	this.setAssetData = function ( list ) {
+		this.assetData = list;
+	};
+	this.getAssetData = function () {
+		return this.assetData;
+	};
 	//设置二维数组记录x和y每次所走的步数
 	this.setStepMap = function ( _obj ){
 		if ( _obj.length == 2 && _obj[0] > -1 && _obj[1] > -1 ) {
@@ -178,9 +192,45 @@ var BaseAreaData = function ( _parentId , _focusId, _focusClass , _stepMap , _ar
 		} catch (error){};
 		
 	};
+	this.ajaxGetData = function () {
+		if ( this.ajaxUrl == "" ) {
+			return;
+		} else {
+			this.ajaxGetDataFun();
+		}
+		
+	};
+	//设置ajax返回的数据处理
+	this.ajaxGetDataFun = function () {
+		var that = this;
+		var xmlhttp;
+		xmlhttp=new XMLHttpRequest();
+		xmlhttp.open("GET",this.ajaxUrl,true);
+		xmlhttp.send();
+		xmlhttp.onreadystatechange = function(){
+			if(xmlhttp.readyState==4 && xmlhttp.status==200){
+				var str = xmlhttp.responseText;
+				try{
+					that.sucess(str);
+				}catch(err){
+					that.error();
+				}
+			}else{
+				that.error();
+			}
+		};
+		setTimeout(function(){
+			xmlhttp.abort();
+		},2000);			
+	};
+	//设置ajax请求地址
+	this.setAjaxUrl = function ( url ) {
+		this.ajaxUrl = url;
+	};
 	//初始化数据
-	this.initData = function () {
+	this.initData = function () {  
 		this.setLabelObjs();
+		this.maxIndex = this.getLabelObjs().length -1;
 		try{
 			var focusId = "";
 			this.setCurLabelIndexByInitFocusId(_focusId);
@@ -189,10 +239,22 @@ var BaseAreaData = function ( _parentId , _focusId, _focusClass , _stepMap , _ar
 		}
 		this.setStepMap(_stepMap);
 		this.setAreaMap(_areaMap);
+		this.ajaxGetData();
 		this.loadAssetData();
 	}
 }
 BaseAreaData.prototype = {
+	//ajax请求的数据处理,res为返回字符串或其他
+	sucess : function ( res ) {
+		this.loadAjaxData( res );
+	},
+	loadAjaxData : function ( res ) {
+		
+	},
+	//ajax错误处理
+	error : function () {
+		
+	},
 	//将按键处理给调用对象，且dom添加焦点样式
 	startRun : function () {
 		this.onFocus();
@@ -218,7 +280,6 @@ BaseAreaData.prototype = {
 	},
 	//垂直滚动
 	vetScroll : function () {
-//		console.log(" scrollHeight =  " + $("#" + this.parentId).prop("scrollHeight") + " height = " + $("#" + this.parentId).outerHeight(true));
 		if ( $("#" + this.parentId).prop("scrollHeight") <= $("#" + this.parentId).height() ) {
 			return;
 		}
@@ -253,15 +314,15 @@ BaseAreaData.prototype = {
 			$contentQ.scrollLeft(scroll + $(this.getCurLabelObj()).outerWidth(true));
 		}
 	},
-	//加载数据，可自定义
+	//用户自定义数据加载
 	loadAssetData : function () {
 		
 	},
-	//清空数据，可自定义
+	//用户自定义数据清除
 	delAssetData : function () {
 		
 	},
-	//上下按键，切换div或者刷新数据
+	//上下按键，切换div或者刷新数据，用户自定义
 	vetChange : function () {
 	
 	},
@@ -338,7 +399,9 @@ BaseAreaData.prototype = {
 		var index = this.getCurLabelIndex();
 		var len = this.getLabelObjs().length;
 		if ( index+y > index && index+y < len ) {
-			this.navPosChange(y);
+			if ( index + y <= this.maxIndex ) {
+				this.navPosChange(y);
+			}
 		} else {
 			this.navAreaChange(this.getAreaMapBottom());
 		}
@@ -348,12 +411,24 @@ BaseAreaData.prototype = {
 	},
 } 
 
-//不规则形排列
+//坑位不规则排列
 var BaseAreaData2 = function ( _parentId , _focusId, _focusClass ,_setpMap,  _areaMap, _menuMap ) {
 	BaseAreaData.call(this,_parentId,_focusId,_focusClass ,_setpMap,  _areaMap);//继承父
 	var menuMap = _menuMap;
 };
 BaseAreaData2.prototype = {
+	//ajax请求的数据处理,res为返回字符串或其他
+	sucess : function ( res ) {
+		this.loadAjaxData( res );
+	},
+	loadAjaxData : function ( res ) {
+		
+	},
+	//ajax错误处理
+	error : function () {
+		
+	},
+
 	startRun : function () {
 		this.onFocus();
 		keyBinds(this);	
